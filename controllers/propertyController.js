@@ -159,7 +159,7 @@ exports.deleteImage = catchAsyncError(async (req, res, next) => {
   if (result["result"] == "ok") {
     const deleteImage = data.images.id(req.body.image_id).remove();
     data.save();
-    data = await package.findById(req.params.id);
+    data = await listPackage.findById(req.params.id);
   }
 
   if (data.images.length == 0) {
