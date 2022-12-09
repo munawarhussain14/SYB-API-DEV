@@ -1,4 +1,4 @@
-const app = require("./app");
+const app = require("./src/app");
 
 const connectDatabase = require("./config/database");
 
@@ -16,7 +16,7 @@ dotenv.config({ path: "config/config.env" });
 
 //connecting to Database
 connectDatabase();
-
+console.log("Post", process.env.PORT);
 const server = app.listen(process.env.PORT || 4000, () => {
   console.log(
     `Server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV} mode.`
