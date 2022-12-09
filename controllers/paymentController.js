@@ -43,7 +43,7 @@ exports.processPayment = catchAsyncError(async (req, res, next) => {
   const business = await List.findById(list_id);
   const listPackage = await ListPackage.findById(package_id);
 
-  if (!package) {
+  if (!listPackage) {
     return next(new ErrorHandler("Please provide Package", 404));
   }
 

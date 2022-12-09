@@ -724,11 +724,11 @@ exports.updateAdminList = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("List not found", 400));
   }
   req.body["sort"] = 3;
-  const package = req.body["package"];
-  if (package) {
-    if (package["package_name"] === "syb_special") {
+  const listPackage = req.body["package"];
+  if (listPackage) {
+    if (listPackage["package_name"] === "syb_special") {
       req.body["sort"] = 1;
-    } else if (package["package_name"] === "featured") {
+    } else if (listPackage["package_name"] === "featured") {
       req.body["sort"] = 2;
     }
   }
