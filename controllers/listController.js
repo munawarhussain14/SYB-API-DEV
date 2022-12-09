@@ -851,7 +851,7 @@ exports.getAdminList = catchAsyncError(async (req, res, next) => {
 const postVerifyPayment = async (list_id) => {
   console.log("Post Verify Payment");
   const list = await List.findById(list_id);
-  let package;
+  let listPackage;
   if (list.package.package_id) {
     listPackage = await ListPackage.findById(list.package.package_id).populate({
       path: "country",
@@ -894,7 +894,7 @@ const postVerifyPayment = async (list_id) => {
         //TODO: Update ref in Selected List
         //console.log(parseInt(amount));
 
-        if (!package) {
+        if (!listPackage) {
           listPackage = await ListPackage.findOne({
             $or: [{ price: amount }, { discount: amount }],
           }).populate({
