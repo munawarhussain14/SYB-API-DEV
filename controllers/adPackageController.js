@@ -1,4 +1,4 @@
-const package = require("../models/adPackage");
+const adPackage = require("../models/adPackage");
 
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middlewares/catchAsyncErrors");
@@ -13,7 +13,7 @@ const formatedProperty = (model) => {
 
 const allPackages = async (req) => {
   const resPerPage = 50;
-  const count = await package.countDocuments();
+  const count = await adPackage.countDocuments();
   const temp = req.query;
   let params = {};
   if (temp["adClass"]) {
@@ -29,7 +29,7 @@ const allPackages = async (req) => {
   }
 
   const apiFeatures = new APIFeatures(
-    formatedProperty(package.find(params)),
+    formatedProperty(adPackage.find(params)),
     req.query
   )
     .search()
@@ -60,9 +60,9 @@ exports.newPackage = catchAsyncError(async (req, res, next) => {
     req.body["country"] = req.body["country"];
   }
 
-  let row = await package.create(req.body);
+  let row = await adPackage.create(req.body);
 
-  row = await formatedProperty(package.find(row._id));
+  row = await formatedProperty(adPackage.find(row._id));
 
   res.status(200).json({
     success: true,
@@ -71,7 +71,7 @@ exports.newPackage = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getPackage = catchAsyncError(async (req, res, next) => {
-  const row = await formatedProperty(package.findById(req.params.id));
+  const row = await formatedProperty(adPackage.findById(req.params.id));
   if (!row) {
     return next(new ErrorHandler("Package not found", 400));
   }
@@ -83,14 +83,14 @@ exports.getPackage = catchAsyncError(async (req, res, next) => {
 });
 
 exports.updatePackage = catchAsyncError(async (req, res, next) => {
-  let row = await formatedProperty(package.findById(req.params.id));
+  let row = await formatedProperty(adPackage.findById(req.params.id));
 
   if (!row) {
     return next(new ErrorHandler("Package not found", 400));
   }
 
   row = await formatedProperty(
-    package.findByIdAndUpdate(req.params.id, req.body, {
+    adPackage.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     })
@@ -103,13 +103,13 @@ exports.updatePackage = catchAsyncError(async (req, res, next) => {
 });
 
 exports.deletePackage = catchAsyncError(async (req, res, next) => {
-  const row = await formatedProperty(package.findById(req.params.id));
+  const row = await formatedProperty(adPackage.findById(req.params.id));
 
   if (!row) {
     return next(new ErrorHandler("Package not found", 400));
   }
 
-  await package.deleteOne();
+  await adPackage.deleteOne();
 
   res.status(200).json({
     success: true,
