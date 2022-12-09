@@ -19,7 +19,7 @@ connectDatabase();
 console.log("Post", process.env.PORT);
 const server = app.listen(process.env.PORT || 4000, () => {
   console.log(
-    `Server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV} mode.`
+    `Server started on PORT: ${process.env.PORT||4000} in ${process.env.NODE_ENV} mode.`
   );
 });
 
