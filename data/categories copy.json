@@ -1,0 +1,81 @@
+[
+    {
+        "name":"Agriculture",
+        "children":[
+            {"name":"Agriculture Distribution/Resale"},
+            {"name":"Farming"},
+            {"name":"Livestock"},
+            {"name":"Agriculture Other"}
+        ]
+    },
+    {
+        "name":"Animal & Pet Businesses",
+        "children":[
+            {"name":"Boarding/Grooming"},
+            {"name":"Pet Care Distribution/Resale"},
+            {"name":"Pet Care Retail"},
+            {"name":"Veterinary Clinics"},
+            {"name":"Pet Care Other"}
+        ]
+    },
+    {
+        "name":"Apparel & Footwear",
+        "children":[
+            {"name":"Accessories"},
+            {"name":"Clothing/Footwear Distribution/Resale"},
+            {"name":"Clothing/Footwear Retail"},
+            {"name":"Footwear Manufacturing/Repair"},
+            {"name":"Garment Manufacturing"},
+            {"name":"Jewellery"},
+            {"name":"Tailoring"},
+            {"name":"Textiles"},
+            {"name":"Clothing/Footwear"}
+        ]
+    },
+    {
+        "name":"Autos",
+        "children":[
+            {"name":"Car Cleaning"},
+            {"name":"Car Rental"},
+            {"name":"Car Repair"},
+            {"name":"Car Retail"},
+            {"name":"Auto Distribution/Resale"},
+            {"name":"Driving Schools"},
+            {"name":"Auto Parts"},
+            {"name":"Auto Other"}
+        ]
+    },
+    {
+        "name":"Beauty",
+        "children":[
+            {"name":"Beauty Distribution/Resale"},
+            {"name":"Beauty Retail"},
+            {"name":"Salons & Spas"},
+            {"name":"Beauty Other"}
+        ]
+    },
+    {"name":"Business Support"},
+    {"name":"Children's Education & Recreation"},
+    {"name":"Commercial & Household Services"},
+    {"name":"Construction"},
+    {"name":"Arts, Entertainment & Culture"},
+    {"name":"Education Training & Personal Development"},
+    {"name":"Electrical Equipment"},
+    {"name":"Energy & Commodities "},
+    {"name":"Finance & Insurance"},
+    {"name":"Fitness"},
+    {"name":"Food & Drink"},
+    {"name":"Furniture"},
+    {"name":"Health Care & Pharmaceuticals"},
+    {"name":"Industrial Manufacturing"},
+    {"name":"IT & Online Businesses"},
+    {"name":"Leisure, Travel & Tourism"},
+    {"name":"Media Marketing Events"},
+    {"name":"Pet Care"},
+    {"name":"Real Estate"},
+    {"name":"Restaurants & Food Outlets"},
+    {"name":"Retail & Supermarkets"},
+    {"name":"Telecoms"},
+    {"name":"Transport & Logistics"},
+    {"name":"Other"}
+]

@@ -1,0 +1,14 @@
+[
+  { "name": "Office" },
+  { "name": "Appartment" },
+  { "name": "Villas" },
+  { "name": "Town House" },
+  { "name": "Hotel Apartments" },
+  { "name": "Penthouses" },
+  { "name": "Deplexes" },
+  { "name": "Whole Building" },
+  { "name": "Bulk Rend Unit" },
+  { "name": "Compounds" },
+  { "name": "Bunglows" },
+  { "name": "Full Floor" }
+]
