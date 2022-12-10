@@ -11,7 +11,7 @@ const axios = require("axios");
 
 const cloudinary = require("cloudinary").v2;
 var formidable = require("formidable");
-const ListPackage = require("../models/package");
+const Package = require("../models/package");
 
 // Upload Image => /api/v1/list/upload/:id
 exports.uploadImage = catchAsyncError(async (req, res, next) => {
@@ -724,11 +724,11 @@ exports.updateAdminList = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("List not found", 400));
   }
   req.body["sort"] = 3;
-  const listPackage = req.body["package"];
-  if (listPackage) {
-    if (listPackage["package_name"] === "syb_special") {
+  const package = req.body["package"];
+  if (package) {
+    if (package["package_name"] === "syb_special") {
       req.body["sort"] = 1;
-    } else if (listPackage["package_name"] === "featured") {
+    } else if (package["package_name"] === "featured") {
       req.body["sort"] = 2;
     }
   }
@@ -851,9 +851,9 @@ exports.getAdminList = catchAsyncError(async (req, res, next) => {
 const postVerifyPayment = async (list_id) => {
   console.log("Post Verify Payment");
   const list = await List.findById(list_id);
-  let listPackage;
+  let package;
   if (list.package.package_id) {
-    listPackage = await ListPackage.findById(list.package.package_id).populate({
+    package = await Package.findById(list.package.package_id).populate({
       path: "country",
     });
     //return next(new ErrorHandler("Package not found", 400));
@@ -894,8 +894,8 @@ const postVerifyPayment = async (list_id) => {
         //TODO: Update ref in Selected List
         //console.log(parseInt(amount));
 
-        if (!listPackage) {
-          listPackage = await ListPackage.findOne({
+        if (!package) {
+          package = await Package.findOne({
             $or: [{ price: amount }, { discount: amount }],
           }).populate({
             path: "country",
@@ -904,9 +904,9 @@ const postVerifyPayment = async (list_id) => {
 
         if (status.code == 3) {
           let package_name = "free";
-          let package_title = listPackage.name;
+          let package_title = package.name;
           sort = 3;
-          if (listPackage.special) {
+          if (package.special) {
             package_name = "syb_special";
             sort = 1;
           } else {
@@ -914,14 +914,14 @@ const postVerifyPayment = async (list_id) => {
             sort = 2;
           }
 
-          if (listPackage.untilSold) {
+          if (package.untilSold) {
             expiry_date = null;
           } else {
             expiry_date = datetime.setDate(
-              datetime.getDate() + listPackage.duration
+              datetime.getDate() + package.duration
             );
           }
-          let currency = listPackage.country.currency;
+          let currency = package.country.currency;
           let current_list = await List.findByIdAndUpdate(list_id, {
             package_status: true,
             sort,
@@ -933,9 +933,9 @@ const postVerifyPayment = async (list_id) => {
               package_date: start_date,
               package_expiry_date: expiry_date,
               package_name: package_name,
-              untilSold: listPackage.untilSold,
-              special: listPackage.special,
-              featured: listPackage.featured,
+              untilSold: package.untilSold,
+              special: package.special,
+              featured: package.featured,
               ref: ref,
               verified: true,
             },

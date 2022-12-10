@@ -12,6 +12,7 @@ const {
   getMainCategories,
   byOldid,
   bySlug,
+  childBySlug,
 } = require("../controllers/categoryController");
 
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
@@ -27,6 +28,7 @@ router.route("/getparentcategories").get(getMainCategories);
 
 router.route("/category/oldid/:old_id").get(byOldid);
 router.route("/category/slug/:slug").get(bySlug);
+router.route("/category/child/:slug").get(childBySlug);
 
 router
   .route("/category/:id")

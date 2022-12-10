@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
+  query_id: {
+    type: String,
+    required: [true, "Please enter Query ID"],
+    trim: true,
+    unique: true,
+  },
   country: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Country",
@@ -50,7 +56,7 @@ const schema = new mongoose.Schema({
     required: [true, "Please select Status"],
     default: "pending",
     enum: {
-      values: ["pending", "in-process", "approved", "rejected", "closed"],
+      values: ["pending", "process", "approved", "rejected", "closed"],
       message: "Please select Correct Status",
     },
   },
@@ -74,6 +80,9 @@ const schema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+  },
+  publishAt: {
+    type: Date,
   },
   createdAt: {
     type: Date,

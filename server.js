@@ -1,9 +1,8 @@
-const dotenv = require("dotenv");
-dotenv.config({ path: "config/config.env" });
-const app = require("./src/app");
+const app = require("./app");
 
 const connectDatabase = require("./config/database");
 
+const dotenv = require("dotenv");
 
 // Handle Uncaught exceptions
 process.on(`uncaughtException`, (err) => {
@@ -13,13 +12,14 @@ process.on(`uncaughtException`, (err) => {
 });
 
 //Setting up config file
+dotenv.config({ path: "config/config.env" });
 
 //connecting to Database
 connectDatabase();
-console.log("Post", process.env.PORT);
+
 const server = app.listen(process.env.PORT || 4000, () => {
   console.log(
-    `Server started on PORT: ${process.env.PORT||4000} in ${process.env.NODE_ENV} mode.`
+    `Server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV} mode.`
   );
 });
 

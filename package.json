@@ -4,8 +4,7 @@
   "description": "Backend API for the SYB App",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=development ./node_modules/.bin/netlify-lambda serve src",
-    "build": "NODE_ENV=production ./node_modules/.bin/netlify-lambda build src",
+    "start": "node server.js",
     "dev": "SET NODE_ENV=DEVELOPMENT& nodemon server",
     "prod": "SET NODE_ENV=PRODUCTION& nodemon server",
     "seeder": "node utils/seeder.js"
@@ -29,10 +28,8 @@
     "mongoose-intl": "^3.3.0",
     "mongose": "^0.0.2-security",
     "multer": "^1.4.3",
-    "netlify-lambda": "^2.0.15",
     "nodemailer": "^6.7.0",
     "path": "^0.12.7",
-    "serverless-http": "^3.1.0",
     "validator": "^13.7.0"
   },
   "devDependencies": {

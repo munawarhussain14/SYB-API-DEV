@@ -261,6 +261,19 @@ exports.bySlug = catchAsyncError(async (req, res, next) => {
   });
 });
 
+exports.childBySlug = catchAsyncError(async (req, res, next) => {
+  const data = await Category.findOne({ slug: req.params.slug });
+  const children = await Category.find({ parent: data.id });
+  if (!data) {
+    return next(new ErrorHandler("Category not found", 400));
+  }
+
+  res.status(200).json({
+    success: true,
+    data:children,
+  });
+});
+
 // Update City => /api/v1/city/:id
 exports.updateCategory = catchAsyncError(async (req, res, next) => {
   let data = await Category.findById(req.params.id);

@@ -8,22 +8,22 @@ const {
   update,
   remove,
   approveQuery,
-} = require("../controllers/buyerQueryController");
+} = require("../controllers/buyerQueryContactsController");
 
-const {
+const { 
   isAuthenticatedUser,
   authorizeRoles,
   isUser,
 } = require("../middlewares/auth");
 
-let base_url = "buyerQueries"
+let base_url = "buyerQueriesContact"
 
 router.route(isAuthenticatedUser,authorizeRoles("admin"),`/${base_url}/approved/:id`).put(approveQuery);
 
 router
   .route(`/${base_url}`)
-  .get(isUser,fetchAll)
-  .post(isUser /*isAuthenticatedUser, authorizeRoles("admin")*/, create);
+  .get(fetchAll)
+  .post(isUser/*isAuthenticatedUser, authorizeRoles("admin")*/, create);
 
 router
   .route(`/${base_url}/:id`)
