@@ -1,0 +1,20 @@
+{
+    "list":[
+      {
+        "name": "English",
+        "_id": "en"
+      },
+      {
+        "name": "Arabic",
+        "_id": "ar"
+      },
+      {
+        "name": "French",
+        "_id": "fr"
+      }
+    ],
+    "default":{
+      "name": "English",
+      "_id": "en"
+    }
+}

@@ -6,6 +6,9 @@ const bodyParser = require("body-parser");
 var cors = require("cors");
 const errorMiddleware = require("./middlewares/errors");
 
+if (process.env.NODE_ENV !== "PRODUCTION")
+  require("dotenv").config({ path: "config/config.env" });
+
 app.use(express.json());
 app.use(cookieParser());
 
