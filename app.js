@@ -1,13 +1,12 @@
 const express = require("express");
+const serverless = require("serverless-http");
 const app = express();
+const router = express.Router();
 
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 var cors = require("cors");
 const errorMiddleware = require("./middlewares/errors");
-
-if (process.env.NODE_ENV !== "PRODUCTION")
-  require("dotenv").config({ path: "config/config.env" });
 
 app.use(express.json());
 app.use(cookieParser());
@@ -23,56 +22,68 @@ app.use(function (req, res, next) {
 
 //import all routes
 //const products = require("./routes/product");
-const auth = require("./routes/auth");
-const country = require("./routes/country");
-const state = require("./routes/state");
-const city = require("./routes/city");
-const category = require("./routes/category");
-const department = require("./routes/departments");
-const activity = require("./routes/activity");
-const list = require("./routes/list");
-const data = require("./routes/data");
-const query = require("./routes/query");
-const payment = require("./routes/payment");
-const amenity = require("./routes/amenity");
-const property_type = require("./routes/property_types");
-const package = require("./routes/package");
-const property = require("./routes/property");
-const advertisement = require("./routes/advertisement");
-const dashboard = require("./routes/dashboard");
-const adpackage = require("./routes/adPackage");
-const adClass = require("./routes/adClass");
-const adType = require("./routes/adType");
-const mail = require("./routes/mail");
-const buyerquery = require("./routes/buyerquery");
-const buyerqueryContact = require("./routes/buyerqueryContact");
+const auth = require("../routes/auth");
+const country = require("../routes/country");
+const state = require("../routes/state");
+const city = require("../routes/city");
+const category = require("../routes/category");
+const department = require("../routes/departments");
+const activity = require("../routes/activity");
+const list = require("../routes/list");
+const data = require("../routes/data");
+const query = require("../routes/query");
+const payment = require("../routes/payment");
+const amenity = require("../routes/amenity");
+const property_type = require("../routes/property_types");
+const listPackage = require("../routes/package");
+const property = require("../routes/property");
+const advertisement = require("../routes/advertisement");
+const dashboard = require("../routes/dashboard");
+const adpackage = require("../routes/adPackage");
+const adClass = require("../routes/adClass");
+const adType = require("../routes/adType");
+const mail = require("../routes/mail");
+const buyerquery = require("../routes/buyerquery");
+const buyerqueryContact = require("../routes/buyerqueryContact");
+
+const base = "/api/v1";
 
 //app.use('/api/v1', products);
-app.use("/api/v1", auth);
-app.use("/api/v1", country);
-app.use("/api/v1", state);
-app.use("/api/v1", city);
-app.use("/api/v1", category);
-app.use("/api/v1", activity);
-app.use("/api/v1", list);
-app.use("/api/v1", data);
-app.use("/api/v1", query);
-app.use("/api/v1", department);
-app.use("/api/v1", payment);
-app.use("/api/v1", amenity);
-app.use("/api/v1", property_type);
-app.use("/api/v1", package);
-app.use("/api/v1", property);
-app.use("/api/v1", advertisement);
-app.use("/api/v1", dashboard);
-app.use("/api/v1", adpackage);
-app.use("/api/v1", adClass);
-app.use("/api/v1", adType);
-app.use("/api/v1", mail);
-app.use("/api/v1", buyerquery);
-app.use("/api/v1", buyerqueryContact);
+app.use(`${base}`, auth);
+app.use(`${base}`, country);
+app.use(`${base}`, state);
+app.use(`${base}`, city);
+app.use(`${base}`, category);
+app.use(`${base}`, activity);
+app.use(`${base}`, list);
+app.use(`${base}`, data);
+app.use(`${base}`, query);
+app.use(`${base}`, department);
+app.use(`${base}`, payment);
+app.use(`${base}`, amenity);
+app.use(`${base}`, property_type);
+app.use(`${base}`, listPackage);
+app.use(`${base}`, property);
+app.use(`${base}`, advertisement);
+app.use(`${base}`, dashboard);
+app.use(`${base}`, adpackage);
+app.use(`${base}`, adClass);
+app.use(`${base}`, adType);
+app.use(`${base}`, mail);
+app.use(`${base}`, buyerquery);
+app.use(`${base}`, buyerqueryContact);
+
+router.get("/",(req,res)=>{
+  res.json({
+    "name":"SYB API",
+    "author":"Munawar Hussain"
+  });
+});
+
+app.use(`${base}`, router);
 
 // Middleware to handle errors
 app.use(errorMiddleware);
 
 module.exports = app;
+// module.exports.handler = serverless(app);

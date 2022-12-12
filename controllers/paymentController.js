@@ -4,7 +4,7 @@ const APIFeatures = require("../utils/ApiFeatures");
 const axios = require("axios");
 const List = require("../models/listing");
 const Advertisement = require("../models/advertisement");
-const Package = require("../models/package");
+const ListPackage = require("../models/package");
 let http = require("http");
 let fs = require("fs");
 require("dotenv").config();
@@ -41,33 +41,33 @@ exports.processPayment = catchAsyncError(async (req, res, next) => {
   }
 
   const business = await List.findById(list_id);
-  const package = await Package.findById(package_id);
+  const listPackage = await Package.findById(package_id);
 
-  if (!package) {
+  if (!listPackage) {
     return next(new ErrorHandler("Please provide Package", 404));
   }
 
-  let amount = package.price;
-  let untilSold = package.untilSold;
+  let amount = listPackage.price;
+  let untilSold = listPackage.untilSold;
   let discount_expire = true;
 
-  if (package.discount) {
-    if (package.discount_end_date) {
+  if (listPackage.discount) {
+    if (listPackage.discount_end_date) {
       let current_date = new Date();
       current_date.setHours(0, 0, 0, 0);
-      let discount_date = new Date(package.discount_end_date);
+      let discount_date = new Date(listPackage.discount_end_date);
       discount_date.setHours(0, 0, 0, 0);
 
       if (discount_date.getTime() >= current_date.getTime()) {
-        amount = package.discount;
+        amount = listPackage.discount;
       } else if (current_date.getTime() > discount_date.getTime()) {
-        amount = package.price;
+        amount = listPackage.price;
       }
     } else {
-      amount = package.discount;
+      amount = listPackage.discount;
     }
   } else {
-    amount = package.price;
+    amount = listPackage.price;
   }
 
   if (amount == 0) {
@@ -273,7 +273,7 @@ exports.freePackage = catchAsyncError(async (req, res, next) => {
 });
 exports.verifyPayment = catchAsyncError(async (req, res, next) => {
   console.log("Verify Payment");
-  const package = await Package.findById(req.params.package_id).populate({
+  const listPackage = await ListPackage.findById(req.params.package_id).populate({
     path: "country",
   });
   const list = await List.findById(req.params.id);
@@ -314,9 +314,9 @@ exports.verifyPayment = catchAsyncError(async (req, res, next) => {
 
           if (status.code == 3) {
             let package_name = "free";
-            let package_title = package.name;
+            let package_title = listPackage.name;
             sort = 3;
-            if (package.special) {
+            if (listPackage.special) {
               package_name = "syb_special";
               sort = 1;
             } else {
@@ -324,15 +324,15 @@ exports.verifyPayment = catchAsyncError(async (req, res, next) => {
               sort = 2;
             }
 
-            if (package.untilSold) {
+            if (listPackage.untilSold) {
               expiry_date = null;
             } else {
               expiry_date = datetime.setDate(
-                datetime.getDate() + package.duration
+                datetime.getDate() + listPackage.duration
               );
             }
 
-            let currency = package.country.currency;
+            let currency = listPackage.country.currency;
             console.log(currency);
             let current_list = await List.findByIdAndUpdate(req.params.id, {
               package_status: true,
@@ -345,9 +345,9 @@ exports.verifyPayment = catchAsyncError(async (req, res, next) => {
                 package_date: start_date,
                 package_expiry_date: expiry_date,
                 package_name: package_name,
-                untilSold: package.untilSold,
-                special: package.special,
-                featured: package.featured,
+                untilSold: listPackage.untilSold,
+                special: listPackage.special,
+                featured: listPackage.featured,
                 ref: ref,
                 verified: true,
               },

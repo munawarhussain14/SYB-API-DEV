@@ -1,4 +1,4 @@
-const package = require("../models/package");
+const listPackage = require("../models/package");
 
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middlewares/catchAsyncErrors");
@@ -11,7 +11,7 @@ const formatedProperty = (model) => {
 const allpackages = async (req) => {
   
   let resPerPage = 10;
-  const count = await package.countDocuments();
+  const count = await listPackage.countDocuments();
 
   if(req.query.page==0){
     resPerPage = 500;
@@ -19,7 +19,7 @@ const allpackages = async (req) => {
   }
 
   const apiFeatures = new APIFeatures(
-    formatedProperty(package.find()),
+    formatedProperty(listPackage.find()),
     req.query
   )
     .search()
@@ -43,13 +43,13 @@ exports.getPackages = catchAsyncError(async (req, res, next) => {
 
 exports.getAppPackages = catchAsyncError(async (req, res, next) => {
   const featured = await formatedProperty(
-    package.find({
+    listPackage.find({
       special: false,
       type: req.params.type,
     })
   );
   const special = await formatedProperty(
-    package.find({ special: true, type: req.params.type })
+    listPackage.find({ special: true, type: req.params.type })
   );
 
   res.status(200).json({
@@ -64,9 +64,9 @@ exports.getAppPackages = catchAsyncError(async (req, res, next) => {
 exports.newPackage = catchAsyncError(async (req, res, next) => {
   req.body["country"] = req.body["country"]["_id"];
   req.body["currency"] = req.body["country"]["currency"];
-  let row = await package.create(req.body);
+  let row = await listPackage.create(req.body);
 
-  row = await formatedProperty(package.find(row._id));
+  row = await formatedProperty(listPackage.find(row._id));
 
   res.status(200).json({
     success: true,
@@ -75,7 +75,7 @@ exports.newPackage = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getPackage = catchAsyncError(async (req, res, next) => {
-  const row = await formatedProperty(package.findById(req.params.id));
+  const row = await formatedProperty(listPackage.findById(req.params.id));
   if (!row) {
     return next(new ErrorHandler("Package not found", 400));
   }
@@ -87,7 +87,7 @@ exports.getPackage = catchAsyncError(async (req, res, next) => {
 });
 
 exports.updatePackage = catchAsyncError(async (req, res, next) => {
-  let row = await formatedProperty(package.findById(req.params.id));
+  let row = await formatedProperty(listPackage.findById(req.params.id));
 
   if (!row) {
     return next(new ErrorHandler("Package not found", 400));
@@ -96,7 +96,7 @@ exports.updatePackage = catchAsyncError(async (req, res, next) => {
   req.body["currency"] = req.body["country"]["currency"];
   req.body["country"] = req.body["country"]["_id"];
 
-  row = await package.findByIdAndUpdate(req.params.id, req.body, {
+  row = await listPackage.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
@@ -108,7 +108,7 @@ exports.updatePackage = catchAsyncError(async (req, res, next) => {
 });
 
 exports.deletePackage = catchAsyncError(async (req, res, next) => {
-  const row = await formatedProperty(package.findById(req.params.id));
+  const row = await formatedProperty(listPackage.findById(req.params.id));
   //console.log("Package ID : ",req.params.id);
   //console.log(row);
 
